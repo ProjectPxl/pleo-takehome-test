@@ -19,16 +19,23 @@ import {
   Stack,
   AspectRatioBox,
   StatGroup,
+  Tooltip
 } from "@chakra-ui/core";
 
 import { useSpaceX } from "../utils/use-space-x";
-import { formatDateTime } from "../utils/format-date";
+import { 
+  formatDateTime, 
+  formatDateTimeInTZ, 
+  getTimeZoneFromLatLong 
+} from "../utils/format-date";
+
 import Error from "./error";
 import Breadcrumbs from "./breadcrumbs";
 
 export default function Launch() {
   let { launchId } = useParams();
   const { data: launch, error } = useSpaceX(`/launches/${launchId}`);
+  const { data: launchPad } = useSpaceX(launch ? '/launchpads/'+launch?.launch_site.site_id : null);
 
   if (error) return <Error />;
   if (!launch) {
@@ -50,7 +57,7 @@ export default function Launch() {
       />
       <Header launch={launch} />
       <Box m={[3, 6]}>
-        <TimeAndLocation launch={launch} />
+        <TimeAndLocation launch={launch} launchPad={launchPad} />
         <RocketInfo launch={launch} />
         <Text color="gray.700" fontSize={["md", null, "lg"]} my="8">
           {launch.details}
@@ -113,7 +120,8 @@ function Header({ launch }) {
   );
 }
 
-function TimeAndLocation({ launch }) {
+function TimeAndLocation({ launch, launchPad }) {
+  console.log(launchPad)
   return (
     <SimpleGrid columns={[1, 1, 2]} borderWidth="1px" p="4" borderRadius="md">
       <Stat>
@@ -124,7 +132,13 @@ function TimeAndLocation({ launch }) {
           </Box>
         </StatLabel>
         <StatNumber fontSize={["md", "xl"]}>
-          {formatDateTime(launch.launch_date_local)}
+          <Tooltip label={"Your time: " + formatDateTime(launch.launch_date_local)}>
+            {launchPad ? formatDateTimeInTZ(launch.launch_date_utc, 
+              getTimeZoneFromLatLong(parseInt(launchPad.location.latitude), 
+                parseInt(launchPad.location.longitude))) : 
+              formatDateTime(launch.launch_date_local)
+              } 
+          </Tooltip>
         </StatNumber>
         <StatHelpText>{timeAgo(launch.launch_date_utc)}</StatHelpText>
       </Stat>
