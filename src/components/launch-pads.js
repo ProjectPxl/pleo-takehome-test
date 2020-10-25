@@ -6,6 +6,7 @@ import Error from "./error";
 import Breadcrumbs from "./breadcrumbs";
 import LoadMoreButton from "./load-more-button";
 import { useSpaceXPaginated } from "../utils/use-space-x";
+import FavButton from "./favorites/favorites-button";
 
 const PAGE_SIZE = 12;
 
@@ -74,6 +75,7 @@ function LaunchPadItem({ launchPad }) {
             {launchPad.attempted_launches} attempted &bull;{" "}
             {launchPad.successful_launches} succeeded
           </Box>
+          <FavButton resource="launch-pads" item={launchPad} uid={launchPad.site_id} />
         </Box>
 
         <Box

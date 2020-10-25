@@ -8,6 +8,7 @@ import { formatDate } from "../utils/format-date";
 import Error from "./error";
 import Breadcrumbs from "./breadcrumbs";
 import LoadMoreButton from "./load-more-button";
+import FavButton from "./favorites/favorites-button";
 
 const PAGE_SIZE = 12;
 
@@ -99,6 +100,7 @@ export function LaunchItem({ launch }) {
           >
             {launch.rocket.rocket_name} &bull; {launch.launch_site.site_name}
           </Box>
+          <FavButton resource="launches" item={launch} uid={launch.flight_number} />
         </Box>
 
         <Box

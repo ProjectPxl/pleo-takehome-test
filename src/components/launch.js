@@ -31,6 +31,7 @@ import {
 
 import Error from "./error";
 import Breadcrumbs from "./breadcrumbs";
+import FavButton from "./favorites/favorites-button";
 
 export default function Launch() {
   let { launchId } = useParams();
@@ -101,6 +102,7 @@ function Header({ launch }) {
         borderRadius="lg"
       >
         {launch.mission_name}
+        <FavButton resource="launches" item={launch} uid={launch.flight_number} />
       </Heading>
       <Stack isInline spacing="3">
         <Badge variantColor="purple" fontSize={["xs", "md"]}>

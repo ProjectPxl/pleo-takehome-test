@@ -7,6 +7,7 @@ import Launch from "./launch";
 import Home from "./home";
 import LaunchPads from "./launch-pads";
 import LaunchPad from "./launch-pad";
+import FavDrawer from "./favorites/favorites-drawer"
 
 export default function App() {
   return (
@@ -42,6 +43,7 @@ function NavBar() {
       >
         ¡SPACE·R0CKETS!
       </Text>
+      <FavDrawer/>
     </Flex>
   );
 }
