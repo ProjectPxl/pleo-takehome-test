@@ -8,6 +8,7 @@ import Home from "./home";
 import LaunchPads from "./launch-pads";
 import LaunchPad from "./launch-pad";
 import FavDrawer from "./favorites/favorites-drawer"
+import LaunchBuilder from "./launch-builder/launch-builder"
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
         <Route path="/launches/:launchId" element={<Launch />} />
         <Route path="/launch-pads" element={<LaunchPads />} />
         <Route path="/launch-pads/:launchPadId" element={<LaunchPad />} />
+        <Route path="/launch-builder" element={<LaunchBuilder />} />
       </Routes>
     </div>
   );
