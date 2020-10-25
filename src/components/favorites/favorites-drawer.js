@@ -18,12 +18,12 @@ import {
 } from "@chakra-ui/core";
 
 export default function FavDrawer() {
-  const {favs, toggleFav} = useContext(FavContext);
+  const {favs} = useContext(FavContext);
   let favItemCount = 0;
 
   for(let category in favs){
     if(favItemCount > 0) break;
-    favItemCount += Object.keys(favs[category]).length;
+    favItemCount += favs[category].length;
   }
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -45,7 +45,7 @@ export default function FavDrawer() {
           <DrawerCloseButton />
           <DrawerHeader>Your Favorites</DrawerHeader>
 
-          <DrawerBody>
+          <DrawerBody overflow="scroll">
             {favItemCount ? getFavItems(favs) : "You don't have any favorites."}
           </DrawerBody>
         </DrawerContent>
@@ -70,11 +70,9 @@ function getFavItems(favs){
             position="relative">
 
             <Box
-              as={Link}
-              to={`/${category}/${item.url}`}
+              as="h4"
               mt="1"
               fontWeight="semibold"
-              as="h4"
               lineHeight="tight"
               isTruncated
             >
